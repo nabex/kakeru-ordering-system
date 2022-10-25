@@ -62,7 +62,6 @@
           <div class="col-sm-6">
             <!--注文全体リスト表示エリア-->
             <div id="orderMenuList"></div>
-            <audio src="https://taira-komori.jpn.org/sound/electric01/2_s.mp3" id="playAudio"></audio><!--音再生-->
           </div>
 
           <!--卓番選択後に表示されるモーダルの内容-->
@@ -123,7 +122,6 @@
       getMenuList();        //商品一覧取得関数
       getOrderMenuList();   //注文追加・キッチン連携関数
     });
-    $('input[type=number]').inputSpinner();
     //注文一覧を表示する関数
     function renderOrderList(orderList) {
       for (const item of orderList) {
@@ -249,7 +247,6 @@
       let socket = io();
       socket.on("orderMenuList", function (msg) {
         console.log(msg);
-        $("#play-button").get(0).play();
         $("#orderMenuList").append(
           '<div class="list-group-item list-group-item-action" aria-current="true" id="' + msg.id + '">' +
           '<div class="d-flex w-100 justify-content-between">' +
