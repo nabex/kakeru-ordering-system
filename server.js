@@ -4,7 +4,7 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
-const PORT = 3000;
+//const PORT = 3000;
 app.use(multer().none());
 
 //注文一覧の情報格納用の配列
@@ -57,6 +57,6 @@ io.on("connection", (socket) => {
 });
 
 //サーバ起動時の初回読込処理
-server.listen(PORT, () => {
-  console.log("listening on " + PORT);
+server.listen(process.env.PORT || 3000, () => {
+  console.log("listening on heroku port or 3000");
 });
