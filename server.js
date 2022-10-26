@@ -4,6 +4,7 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
+path = require('path'),
 //const PORT = 3000;
 app.use(multer().none());
 
@@ -21,6 +22,9 @@ function uuid() {
   }
   return uuid;
 }
+
+// 静的ファイルの場所を指定する(この配下で、CSS,JS,IMG,音声ファイルなどの静的ファイルが使用可能に)
+app.use(express.static(path.join(__dirname, '/')));
 
 //サーバのルートディレクトリに格納されているindex.html(TOP画面)を表示される
 app.get("/", (req, res) => {
@@ -58,5 +62,5 @@ io.on("connection", (socket) => {
 
 //サーバ起動時の初回読込処理
 server.listen(process.env.PORT || 3000, () => {
-  console.log("listening on heroku port or 3000");
+  console.log("listening on HEROKU PORT or 3000");
 });

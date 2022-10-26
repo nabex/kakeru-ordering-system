@@ -30,6 +30,7 @@
 
 <body>
   <main>
+
     <div class="container py-4">
 
       <header class="pb-3 mb-4 border-bottom">
@@ -115,6 +116,7 @@
       </div>
 
       <!-- RECEIVED ORDER Apllication Modal -->
+      <audio src="postAudio.mp3" id="playAudio"></audio>
       <div class="modal fade" id="receiveOrderAppScreen" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
@@ -195,17 +197,18 @@
   //******************************************************************************//
   //****                   HTML読込後に実行処理する関数一覧                        ****//
   //******************************************************************************//
+
+  //https://mdstage.com/wp-content/uploads/2019/05/sample_audio.mp3
   $(document).ready(function () {
     table();                  //テーブル表示関数
     getMenuList();            //商品一覧取得関数
     getOrderMenuList();       //注文追加・キッチン連携関数
     startCustomize();         //商品一覧変更シート遷移関数
     //renderOrderList();      //リロード時注文一覧表示関数(グローバル指定)
-    //fetchOrderList();       //リロード時配列から注文一覧取得関数（グローバル指定）
+    //fetchOrderLsist();       //リロード時配列から注文一覧取得関数（グローバル指定）
     //deleteOrderMenuItem();  //注文一覧削除関数(グローバル指定)
-
   });
-
+ 
   //商品一覧変更用のシートえ遷移させる関数
   function startCustomize() {
     $("#startCustomize").on("click", function () {
@@ -252,7 +255,7 @@
       $("#table").append(
         '<div class="col">' +
         '<div class="card shadow-sm">' +
-        '<svg class="bd-placeholder-img card-img-top fs-1" width="100%" height="120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">0' + i + '</text></svg>' +
+        '<svg class="bd-placeholder-img card-img-top fs-1" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">0' + i + '</text></svg>' +
         '<div class="card-body">' +
         '<p class="card-text">TABLE #0' + i + '</p>' +
         '<div class="d-flex justify-content-between align-items-center">' +
@@ -354,6 +357,10 @@
         '</div>' +
         '</div>'
       );
+
+      $("#playAudio").get(0).play();
+
+
     });
   }
   //******************************************************************************//
