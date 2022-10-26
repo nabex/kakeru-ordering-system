@@ -62,7 +62,7 @@
               キッチンに注文情報が送信されます。
             </p>
             <button class="btn btn-outline-light" type="button" data-bs-toggle="modal"
-              data-bs-target="#postOrderAppScreen">START POST ORDER</button>
+              data-bs-target="#postOrderAppScreen">START POST ODER</button>
           </div>
         </div>
         <div class="col-md-6">
@@ -94,13 +94,8 @@
               </a>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="container modal-body">
-              <div class="row">
-                <div class="col">
-                  <!--卓版表示エリア-->
-                  <div id="table" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
-                </div>
-              </div>
+            <div class="modal-body">
+              ...
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -125,14 +120,8 @@
               </a>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="container modal-body">
-              <div class="row">
-                <!--注文全体リスト表示エリア-->
-                
-                  <!--注文全体リスト表示エリア-->
-                  <div id="orderMenuList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
-                
-              </div>
+            <div class="modal-body">
+              ...
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -142,33 +131,51 @@
       </div>
 
 
-      <!--卓番選択後に表示されるモーダルの内容-->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">TABLE #0<span id="tableNumber"></span> 注文追加</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <!--追加する注文一覧-->
-                  メニューリスト
-                  <ul class="list-group">
-                    <div id="menulist"></div>
-                  </ul>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <!--卓版表示エリア-->
+          <div id="table" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <!--卓版表示エリア内をさらに4分割-->
+          </div>
+        </div>
+        <!--END：卓版表示エリア-->
+        <!--注文全体リスト表示エリア-->
+        <div class="col-sm-6">
+          <!--注文全体リスト表示エリア-->
+          <div id="orderMenuList"></div>
+        </div>
+
+        <!--卓番選択後に表示されるモーダルの内容-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">TABLE #0<span id="tableNumber"></span> 注文追加</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <!--追加する注文一覧-->
+                    メニューリスト
+                    <ul class="list-group">
+                      <div id="menulist"></div>
+                    </ul>
+                  </div>
+                  <!--END：追加する注文一覧-->
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-              <button type="button" class="btn btn-primary" id="sendOrderList" data-bs-dismiss="modal">注文確定</button>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                <button type="button" class="btn btn-primary" id="sendOrderList" data-bs-dismiss="modal">注文確定</button>
+              </div>
             </div>
           </div>
         </div>
+        <!--END：卓番選択後に表示されるモーダルの内容-->
+
       </div>
-      <!--END：卓番選択後に表示されるモーダルの内容-->
 
       <footer class="pt-3 mt-4 text-muted border-top">
         &copy; 2022 MeM Co,Ltd
@@ -333,10 +340,9 @@
     socket.on("orderMenuList", function (msg) {
       console.log(msg);
       $("#orderMenuList").append(
-        '<div class="col">' +
         '<div class="list-group-item list-group-item-action shadow-sm p-2 mb-3 bg-body rounded" aria-current="true" id="' + msg.id + '">' +
         '<div class="d-flex w-100 justify-content-between">' +
-        '<h6 class="mb-1 fw-bold"><span class="badge bg-secondary fs-8">TABLE #0' + msg.table + '</span>&emsp;' + msg.menu + '</h6>' +
+        '<h5 class="mb-1 fw-bold"><span class="badge bg-secondary fs-8">TABLE #0' + msg.table + '</span>&emsp;' + msg.menu + '</h5>' +
         '<small class="text-muted">' + msg.time + '</small>' +
         '</div>' +
         '<div class="input-group">' +
@@ -346,7 +352,6 @@
         '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
         '</div>' +
         '<small class="mb-1 fs-8">備考：' + msg.remarks + '</small>' +
-        '</div>'+
         '</div>'
       );
     });
