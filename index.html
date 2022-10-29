@@ -208,7 +208,7 @@
     //fetchOrderLsist();       //リロード時配列から注文一覧取得関数（グローバル指定）
     //deleteOrderMenuItem();  //注文一覧削除関数(グローバル指定)
   });
- 
+
   //商品一覧変更用のシートえ遷移させる関数
   function startCustomize() {
     $("#startCustomize").on("click", function () {
@@ -312,22 +312,45 @@
         $('#sendOrderList').click(function () {
           var now = new Date();                                 //時間を取得する関数の呼び出し
           var time = (now.getHours() + ':' + now.getMinutes()); //時刻表示のフォーマット作成し変数に代入
+          var sendOrderFlg = "";                                //個数の記載が漏れていないかチェックする変数
           for (let i in data) {                                 //SpreadSheetから全行呼び出し
             if (data[i].item != '') {                           //空欄は読み取らない
               if ($("#name" + i).prop("checked")) {             //チェックが入っている場合
-                var tablenumber = $("#tableNumber").text();     //テーブルナンバーを変数に代入
-                var name = $("#name" + i).val();                //商品名を変数に代入
                 var quantity = $("#quantity" + i).val();        //個数を変数に代入
-                var remarks = $("#remarks" + i).val();          //備考を変数に代入
-                let socket = io();
-                //上記の変数を結合。//server.jsに一覧情報を送信し、クライアントにブロードキャスト。
-                socket.emit("orderMenuList", tablenumber + ',' + name + ',' + quantity + ',' + remarks + ',' + time);
-                //処理完了後、全てのINPUTボックスの値をリセットする
-                $("#name" + i).removeAttr("checked").prop("checked", false).change(); //チェックボックスのリセット
-                $("#quantity" + i).val('');                                           //入力した数量のリセット
-                $("#remarks" + i).val('');                                            //入力した備考のリセット
+                if(quantity == ''){
+                  sendOrderFlg = "NG";                          //個数の記載に漏れ有り。case "NG"へ
+                }else{
+                  sendOrderFlg = "OK";                          //個数の記載に漏れ無し。case "OK"へ
+                }
               }
             }
+          }
+          switch(sendOrderFlg){
+            //個数の記載に漏れがなかった場合のケース
+            case "OK":
+              for(let i in data){
+                if (data[i].item != '') {
+                  if ($("#name" + i).prop("checked")) {             //チェックが入っている場合
+                    var tablenumber = $("#tableNumber").text();     //テーブルナンバーを変数に代入
+                    var name = $("#name" + i).val();                //商品名を変数に代入
+                    var quantity = $("#quantity" + i).val();        //個数を変数に代入
+                    var remarks = $("#remarks" + i).val();          //備考を変数に代入
+                    let socket = io();
+
+                    //上記の変数を結合。//server.jsに一覧情報を送信し、クライアントにブロードキャスト。
+                    socket.emit("orderMenuList", tablenumber + ',' + name + ',' + quantity + ',' + remarks + ',' + time);
+                    //処理完了後、全てのINPUTボックスの値をリセットする
+                    $("#name" + i).removeAttr("checked").prop("checked", false).change(); //チェックボックスのリセット
+                    $("#quantity" + i).val('');                                           //入力した数量のリセット
+                    $("#remarks" + i).val('');                                            //入力した備考のリセット
+                  }
+                }
+              }
+              break;
+            //個数の記載に漏れがあった場合のケース
+            case "NG":
+              alert("個数の記載が漏れてます。見直してください");
+            break;
           }
         });
       });
@@ -353,10 +376,10 @@
         '<input type="number" min="0" max="99" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
         '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
         '</div>' +
-        '<div class="input-group mt-2">'+
-        '<span class="input-group-text" id="basic-addon1">備考</span>'+
-        '<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="'+msg.remarks+'">'+
-        '</div>'+
+        '<div class="input-group mt-2">' +
+        '<span class="input-group-text" id="basic-addon1">備考</span>' +
+        '<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="' + msg.remarks + '">' +
+        '</div>' +
         //'<input class="mb-1 fs-8">備考：' + msg.remarks + '</input>' +
         '</div>' +
         '</div>'
