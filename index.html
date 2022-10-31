@@ -172,6 +172,9 @@
         </div>
       </div>
 
+      <!-- datetime内の時間がレンダリングされます -->
+      <div id="timeago" datetime="2016-10-01 05:30:00"></div>
+
       <!--FOOTER：署名表示　-->
       <footer class="pt-3 mt-4 text-muted border-top">
         &copy; 2022 MeM Co,Ltd
@@ -197,8 +200,6 @@
   //******************************************************************************//
   //****                   HTML読込後に実行処理する関数一覧                        ****//
   //******************************************************************************//
-
-  //https://mdstage.com/wp-content/uploads/2019/05/sample_audio.mp3
   $(document).ready(function () {
     table();                  //テーブル表示関数
     getMenuList();            //商品一覧取得関数
@@ -317,18 +318,18 @@
             if (data[i].item != '') {                           //空欄は読み取らない
               if ($("#name" + i).prop("checked")) {             //チェックが入っている場合
                 var quantity = $("#quantity" + i).val();        //個数を変数に代入
-                if(quantity == ''){
+                if (quantity == '') {
                   sendOrderFlg = "NG";                          //個数の記載に漏れ有り。case "NG"へ
-                }else{
+                } else {
                   sendOrderFlg = "OK";                          //個数の記載に漏れ無し。case "OK"へ
                 }
               }
             }
           }
-          switch(sendOrderFlg){
+          switch (sendOrderFlg) {
             //個数の記載に漏れがなかった場合のケース
             case "OK":
-              for(let i in data){
+              for (let i in data) {
                 if (data[i].item != '') {
                   if ($("#name" + i).prop("checked")) {             //チェックが入っている場合
                     var tablenumber = $("#tableNumber").text();     //テーブルナンバーを変数に代入
@@ -350,7 +351,7 @@
             //個数の記載に漏れがあった場合のケース
             case "NG":
               alert("個数の記載が漏れてます。見直してください");
-            break;
+              break;
           }
         });
       });
@@ -373,13 +374,14 @@
         '<div class="input-group">' +
         '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
         //'<button type="button" class="btn btn-danger" id="deleteOrderMenuList">-0.5</button>' +
-        '<input type="number" min="0" max="99" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
+        '<input type="number" min="0" max="'+ msg.quantity+'" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
         '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
         '</div>' +
-        '<div class="input-group mt-2">' +
-        '<span class="input-group-text" id="basic-addon1">備考</span>' +
-        '<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="' + msg.remarks + '">' +
-        '</div>' +
+        '<small>備考：'+msg.remarks+'</small>'+
+        //'<div class="input-group mt-2">' +
+        //'<span class="input-group-text" id="basic-addon1">備考</span>' +
+        //'<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="' + msg.remarks + '">' +
+        //'</div>' +
         //'<input class="mb-1 fs-8">備考：' + msg.remarks + '</input>' +
         '</div>' +
         '</div>'
