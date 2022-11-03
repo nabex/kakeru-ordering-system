@@ -90,14 +90,14 @@
         <div class="modal-dialog modal-fullscreen">
           <div class="modal-content">
             <div class="modal-header border-bottom">
-              <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+              <div class="d-flex align-items-center text-dark text-decoration-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                   class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
                   <path
                     d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z" />
                 </svg>
                 <span class="fs-4 ms-2 fw-bold">POST ORDER Application</span>
-              </a>
+              </div>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="container modal-body">
@@ -122,14 +122,14 @@
         <div class="modal-dialog modal-fullscreen">
           <div class="modal-content">
             <div class="modal-header border-bottom">
-              <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+              <div class="d-flex align-items-center text-dark text-decoration-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                   class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
                   <path
                     d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z" />
                 </svg>
                 <span class="fs-4 ms-2 fw-bold">RECEIVED ORDER Application</span>
-              </a>
+              </div>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="container modal-body">
@@ -194,7 +194,9 @@
   integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/livestamp/1.1.0/livestamp.js"></script>
+
 
 <script>
   //******************************************************************************//
@@ -208,6 +210,7 @@
     //renderOrderList();      //リロード時注文一覧表示関数(グローバル指定)
     //fetchOrderLsist();       //リロード時配列から注文一覧取得関数（グローバル指定）
     //deleteOrderMenuItem();  //注文一覧削除関数(グローバル指定)
+
   });
 
   //商品一覧変更用のシートえ遷移させる関数
@@ -387,7 +390,6 @@
   //****                   getOrderMenuList:注文一覧の取得・表示                 ****//
   //******************************************************************************//
   function getOrderMenuList() {
-
     let socket = io();
     socket.on("orderMenuList", function (msg) {
       console.log(msg);
@@ -396,7 +398,7 @@
         '<div class="list-group-item list-group-item-action shadow-sm p-2 mb-3 bg-body rounded" aria-current="true">' +
         '<div class="d-flex w-100 justify-content-between">' +
         '<h6 class="mb-1 fw-bold"><span class="badge bg-secondary fs-8">TABLE #0' + msg.table + '</span>&emsp;' + msg.menu + '</h6>' +
-        '<small id="time" class="text-muted" data-livestamp="'+msg.time+'"></small>' +
+        '<small id="time" class="text-muted" data-livestamp="' + msg.time + '"></small>' +
         //'<small class="text-muted">' + msg.time + '</small>' +
         '</div>' +
         '<div class="input-group">' +
