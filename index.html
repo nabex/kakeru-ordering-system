@@ -335,8 +335,18 @@
       $(function () {
         $('#sendOrderList').click(function () {
           var unixtime = Math.round((new Date()).getTime() / 1000);
+          
+          var toDoubleDigits = function (num) {
+            num += "";
+            if (num.length === 1) {
+              num = "0" + num;
+            }
+            return num;
+          };
           var now = new Date();                                 //時間を取得する関数の呼び出し
-          var time = (now.getHours() + ':' + now.getMinutes()); //時刻表示のフォーマット作成し変数に代入
+          var time = (toDoubleDigits(now.getHours()) + ':' + toDoubleDigits(now.getMinutes())); //時刻表示のフォーマット作成し変数に代入
+
+
           var sendOrderFlg = "";                                //個数の記載が漏れていないかチェックする変数
           for (let i in data) {                                 //SpreadSheetから全行呼び出し
             if (data[i].item != '') {                           //空欄は読み取らない
@@ -362,7 +372,7 @@
                     let socket = io();
 
                     //上記の変数を結合。//server.jsに一覧情報を送信し、クライアントにブロードキャスト。
-                    socket.emit("orderMenuList", tablenumber + ',' + name + ',' + quantity + ',' + remarks + ',' + time +',' + unixtime);
+                    socket.emit("orderMenuList", tablenumber + ',' + name + ',' + quantity + ',' + remarks + ',' + time + ',' + unixtime);
                     //処理完了後、全てのINPUTボックスの値をリセットする
                     $("#name" + i).removeAttr("checked").prop("checked", false).change(); //チェックボックスのリセット
                     $("#quantity" + i).val('');                                           //入力した数量のリセット
