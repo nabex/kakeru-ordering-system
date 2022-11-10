@@ -37,6 +37,19 @@ app.get("/api/v1/orderList", (req, res) => {
   res.json(orderList);
 });
 
+app.delete("/api/v1/orderItem:id", (req, res) => {
+  // URLの:idと同じIDを持つ項目を検索
+  const index = orderList.findIndex((item) => item.id === req.params.id);
+  // 項目が見つかった場合
+  if(index >= 0){
+    const deleted = orderList.splice(index, 1); // indexの位置にある項目を削除
+    console.log('CALL DELETE API: ' + JSON.stringify(deleted[0]));
+  }
+
+  // ステータスコード200:OKを送信
+  res.sendStatus(200);
+})
+
 
 io.on("connection", (socket) => {
   console.log("client connection!!!");
