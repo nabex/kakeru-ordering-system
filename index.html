@@ -224,8 +224,19 @@
     });
   };
 
+
+  //注文の提供完了した際に配列から削除する処理
+  function deleteButtonListener(id) {
+    // DELETEメソッドでAPIにアクセス
+    // 削除後にリスト更新
+    fetch(`./api/v1/orderItem/${id}`, { method: 'DELETE' })
+      .then(() => fetchOrderList());
+  }
+
   //注文一覧を表示する関数
   function renderOrderList(orderList) {
+    $("#orderMenuList").empty();;
+
     for (const msg of orderList) {
       console.log(msg);
       $("#orderMenuList").append(
@@ -444,6 +455,7 @@
   function deleteOrderMenuItem(id) {
     console.log("DELETE ID: " + id);
     $("#" + id).remove();
+    deleteButtonListener(id);
   };
 </Script>
 </body>

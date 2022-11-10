@@ -37,7 +37,7 @@ app.get("/api/v1/orderList", (req, res) => {
   res.json(orderList);
 });
 
-app.delete("/api/v1/orderItem:id", (req, res) => {
+app.delete("/api/v1/orderItem/:id", (req, res) => {
   // URLの:idと同じIDを持つ項目を検索
   const index = orderList.findIndex((item) => item.id === req.params.id);
   // 項目が見つかった場合
