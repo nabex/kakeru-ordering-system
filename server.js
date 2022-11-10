@@ -42,19 +42,22 @@ io.on("connection", (socket) => {
   console.log("client connection!!!");
   //サーバが受け取った注文情報を全員確認できるようにする。クライアントに情報を返却する処理。
   socket.on("orderMenuList", (msg) => {
-    //注文情報の文字列データを','で分割し配列化（EX：卓番,商品名,個数,備考,オーダ時刻→[ '卓番', '商品名', '数量', '備考', '注文時刻' ]）
-    var oderInfo = msg.split(',');
+    //注文情報の文字列データを','で分割し配列化（EX：卓番,商品名,個数,備考,オーダ時刻→[ '卓番', '商品名', '数量', '備考', '注文時刻', '注文時間(UNIX)' ]）
+    var orderInfo = msg.split(',');
     var id = uuid();
     const oderItem = {
       id,                     //uuid:一意の識別ID
-      table: oderInfo[0],     //卓番
-      menu: oderInfo[1],      //商品名
-      quantity: oderInfo[2],  //数量
-      remarks: oderInfo[3],   //備考
-      time: oderInfo[4]       //注文時刻
+      table: orderInfo[0],     //卓番
+      menu: orderInfo[1],      //商品名
+      quantity: orderInfo[2],  //数量
+      remarks: orderInfo[3],   //備考
+      time: orderInfo[4],      //注文時刻
+      unixtime: orderInfo[5]  //注文時間(UNIX時間)
+
     }
     //注文一覧情報の格納用配列にPUSHする
     orderList.push(oderItem);
+    console.log(orderList);
     //全てのクライアントにブロードキャスト
     io.emit("orderMenuList", oderItem);
   });

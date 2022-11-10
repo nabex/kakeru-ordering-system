@@ -78,7 +78,7 @@
               RECEVE ORDER Application はホールスタッフからPOSTされた注文情報を一覧表示します。調理完了後、対象の注文情報に表示されている<br>
               DONE を押下すると、一覧から削除されます。
             </p>
-            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
+            <button id="getFetchOrderMenuList" class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
               data-bs-target="#receiveOrderAppScreen">START RECEIVE ORDER</button>
           </div>
         </div>
@@ -205,37 +205,56 @@
   $(document).ready(function () {
     table();                  //テーブル表示関数
     getMenuList();            //商品一覧取得関数
+    fetchOrderList();
     getOrderMenuList();       //注文追加・キッチン連携関数
     startCustomize();         //商品一覧変更シート遷移関数
     //renderOrderList();      //リロード時注文一覧表示関数(グローバル指定)
     //fetchOrderLsist();       //リロード時配列から注文一覧取得関数（グローバル指定）
     //deleteOrderMenuItem();  //注文一覧削除関数(グローバル指定)
-
+    //getFetchOrderMenuList();
+    //初回・リロード時注文一覧情報取得関数
   });
 
-  //商品一覧変更用のシートえ遷移させる関数
+  /*
+  function getFetchOrderMenuList(){
+    $("#getFetchOrderMenuList").on("click", function(){
+      fetchOrderList();
+    });
+  };
+  */
+
+  //商品一覧変更用のシートを遷移させる関数
   function startCustomize() {
     $("#startCustomize").on("click", function () {
       const url = 'https://docs.google.com/spreadsheets/d/1GWbxTcwg0jFoESiucSXHrzzgu0fVtpS_Ir3fFi30Ndo/edit#gid=1330995100';
       window.open(url, "_blunk");
     });
   };
+
   //注文一覧を表示する関数
   function renderOrderList(orderList) {
     for (const item of orderList) {
       $("#orderMenuList").append(
-        '<div class="list-group-item list-group-item-action" aria-current="true" id="' + msg.id + '">' +
+        '<div class="col" id="' + msg.id + '">' +
+        '<div class="list-group-item list-group-item-action shadow-sm p-2 mb-3 bg-body rounded" aria-current="true">' +
         '<div class="d-flex w-100 justify-content-between">' +
-        '<h5 class="mb-1 fw-bold"><span class="badge bg-secondary fs-8">TABLE #0' + msg.table + '</span>&emsp;' + msg.menu + '</h5>' +
+        '<h6 class="mb-1 fw-bold"><span class="badge bg-secondary fs-8">TABLE #0' + msg.table + '</span>&emsp;' + msg.menu + '</h6>' +
         '<small class="text-muted">' + msg.time + '</small>' +
         '</div>' +
+        '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
         '<div class="input-group">' +
         '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
-        '<button type="button" class="btn btn-danger" id="deleteOrderMenuList">-0.5</button>' +
-        '<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showRemarks" value="' + msg.quantity + '">' +
+        //'<button type="button" class="btn btn-danger" id="deleteOrderMenuList">-0.5</button>' +
+        '<input type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
         '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
         '</div>' +
-        '<small class="mb-1 fs-8">備考：' + msg.remarks + '</small>' +
+        '<small>備考：' + msg.remarks + '</small>' +
+        //'<div class="input-group mt-2">' +
+        //'<span class="input-group-text" id="basic-addon1">備考</span>' +
+        //'<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value="' + msg.remarks + '">' +
+        //'</div>' +
+        //'<input class="mb-1 fs-8">備考：' + msg.remarks + '</input>' +
+        '</div>' +
         '</div>'
       );
     }
@@ -249,8 +268,7 @@
         renderOrderList(orderList)
       })
   }
-  //初回・リロード時注文一覧情報取得関数
-  fetchOrderList();
+
   //******************************************************************************//
   //****                   table:テーブル一覧を表示する関数                       ****//
   //******************************************************************************//
@@ -316,9 +334,9 @@
       //サーバに注文情報を送信。
       $(function () {
         $('#sendOrderList').click(function () {
-          //var time = new Date();                                 //時間を取得する関数の呼び出し
-          var time = Math.round((new Date()).getTime() / 1000);
-          //var time = (now.getHours() + ':' + now.getMinutes()); //時刻表示のフォーマット作成し変数に代入
+          var unixtime = Math.round((new Date()).getTime() / 1000);
+          var now = new Date();                                 //時間を取得する関数の呼び出し
+          var time = (now.getHours() + ':' + now.getMinutes()); //時刻表示のフォーマット作成し変数に代入
           var sendOrderFlg = "";                                //個数の記載が漏れていないかチェックする変数
           for (let i in data) {                                 //SpreadSheetから全行呼び出し
             if (data[i].item != '') {                           //空欄は読み取らない
@@ -333,22 +351,6 @@
             }
           }
           switch (sendOrderFlg) {
-            //個数の記載に漏れがなかった場合のケース
-            /*
-            case "STANDBY":
-              alert("STANDBY");
-              for (let i in data) {
-                if (data[i].item != '') {
-                  //if (!$("#name" + i).is(':checked')) {
-                    if($("#quantity"+i).val()!='' || $("#remarks"+i).val()!=''){
-                      alert("個数の記載があるがチェックが漏れている注文があります。");
-                    }
-                  //}
-                }
-              }
-
-              break;
-              */
             case "OK":
               for (let i in data) {
                 if (data[i].item != '') {
@@ -360,7 +362,7 @@
                     let socket = io();
 
                     //上記の変数を結合。//server.jsに一覧情報を送信し、クライアントにブロードキャスト。
-                    socket.emit("orderMenuList", tablenumber + ',' + name + ',' + quantity + ',' + remarks + ',' + time);
+                    socket.emit("orderMenuList", tablenumber + ',' + name + ',' + quantity + ',' + remarks + ',' + time +',' + unixtime);
                     //処理完了後、全てのINPUTボックスの値をリセットする
                     $("#name" + i).removeAttr("checked").prop("checked", false).change(); //チェックボックスのリセット
                     $("#quantity" + i).val('');                                           //入力した数量のリセット
@@ -379,28 +381,22 @@
     });
   }
 
-  //テーブル備考の追加
-  //卓番を大きく
-  //備考赤字
-  //一日の注文数
-
-
-
   //******************************************************************************//
   //****                   getOrderMenuList:注文一覧の取得・表示                 ****//
   //******************************************************************************//
   function getOrderMenuList() {
     let socket = io();
     socket.on("orderMenuList", function (msg) {
+      //fetchOrderList();
       console.log(msg);
       $("#orderMenuList").append(
         '<div class="col" id="' + msg.id + '">' +
         '<div class="list-group-item list-group-item-action shadow-sm p-2 mb-3 bg-body rounded" aria-current="true">' +
         '<div class="d-flex w-100 justify-content-between">' +
         '<h6 class="mb-1 fw-bold"><span class="badge bg-secondary fs-8">TABLE #0' + msg.table + '</span>&emsp;' + msg.menu + '</h6>' +
-        '<small id="time" class="text-muted" data-livestamp="' + msg.time + '"></small>' +
-        //'<small class="text-muted">' + msg.time + '</small>' +
+        '<small class="text-muted">' + msg.time + '</small>' +
         '</div>' +
+        '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
         '<div class="input-group">' +
         '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
         //'<button type="button" class="btn btn-danger" id="deleteOrderMenuList">-0.5</button>' +
