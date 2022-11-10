@@ -206,23 +206,15 @@
   $(document).ready(function () {
     table();                  //テーブル表示関数
     getMenuList();            //商品一覧取得関数
-    fetchOrderList();
+    fetchOrderList();         //リロード時配列から注文一覧取得関数（グローバル指定）
     getOrderMenuList();       //注文追加・キッチン連携関数
     startCustomize();         //商品一覧変更シート遷移関数
     //renderOrderList();      //リロード時注文一覧表示関数(グローバル指定)
-    //fetchOrderLsist();       //リロード時配列から注文一覧取得関数（グローバル指定）
     //deleteOrderMenuItem();  //注文一覧削除関数(グローバル指定)
     //getFetchOrderMenuList();
     //初回・リロード時注文一覧情報取得関数
   });
 
-  /*
-  function getFetchOrderMenuList(){
-    $("#getFetchOrderMenuList").on("click", function(){
-      fetchOrderList();
-    });
-  };
-  */
 
   //商品一覧変更用のシートを遷移させる関数
   function startCustomize() {
@@ -234,7 +226,8 @@
 
   //注文一覧を表示する関数
   function renderOrderList(orderList) {
-    for (const item of orderList) {
+    for (const msg of orderList) {
+      console.log(msg);
       $("#orderMenuList").append(
         '<div class="col" id="' + msg.id + '">' +
         '<div class="list-group-item list-group-item-action shadow-sm p-2 mb-3 bg-body rounded" aria-current="true">' +
@@ -243,7 +236,7 @@
         '<small class="text-muted">' + msg.time + '</small>' +
         '</div>' +
         '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
-        '<div class="input-group">' +
+        '<div class="input-group mt-2">' +
         '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
         //'<button type="button" class="btn btn-danger" id="deleteOrderMenuList">-0.5</button>' +
         '<input type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
@@ -262,14 +255,22 @@
   }
   //GET APIから注文一覧を取得して描画する関数
   async function fetchOrderList() {
+    //alert("api calling");
     // APIからJSONを取得する
     return fetch('./api/v1/orderList')
       .then((response) => response.json())
       .then((orderList) => {
+        //デバッグ用
+        //for (let value of orderList.entries()) { 
+        //    console.log(value); 
+        //}
         renderOrderList(orderList)
       })
   }
 
+  //******************************************************************************//
+  //****                   showtime:リアルタイム時刻表示（キッチン画面）            ****//
+  //******************************************************************************//
 
   function showtime() {
     var today = new Date();
@@ -407,7 +408,6 @@
   function getOrderMenuList() {
     let socket = io();
     socket.on("orderMenuList", function (msg) {
-      //fetchOrderList();
       console.log(msg);
       $("#orderMenuList").append(
         '<div class="col" id="' + msg.id + '">' +

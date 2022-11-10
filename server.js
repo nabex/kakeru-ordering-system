@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 
 // http://FQDN/api/v1/orderList にアクセスしてきたときにオーダ一覧のリストを返す
 app.get("/api/v1/orderList", (req, res) => {
-  console.log("app_get_orderList");
+  console.log("CALL API: app_get_orderList");
   res.json(orderList);
 });
 
