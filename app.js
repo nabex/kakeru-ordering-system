@@ -8,6 +8,7 @@ $(document).ready(function () {
     getOrderMenuList();             //注文追加・キッチン連携関数
     startCustomize();               //商品一覧変更シート遷移関数
     setInterval(showtime, 1000);    //時刻リアルタイム表示関数
+    onlyNumChecker();               //数量欄は半角数字のみ入力可能にする関数
     //renderOrderList();            //(グローバル指定)リロード時注文一覧表示関数
     //deleteOrderMenuItem();        //(グローバル指定)注文一覧削除関数
     //deleteButtonListener();       //(グローバル指定)配列操作:DELETE API呼出し関数_注文処理完了時
@@ -135,7 +136,7 @@ function getMenuList() {
                     '</div>' +
                     '<div class="col-md-2 input-group-sm btn-group">' +
                     //個数入力欄
-                    '<input type="number" min="0" max="99" step="0.5" class="form-control" name="menu_" id="quantity' + i + '" placeholder="個数">' +
+                    '<input type="number" min="0" max="99" step="0.5" class="input_number_only form-control" name="menu_" id="quantity' + i + '" placeholder="個数">' +
                     //'<button type="button" class="btn btn-plus btn-increment btn-primary" id="addQuantity' + i + '">+1</button>' +
                     '</div>' +
                     '<div class="col-md-4 input-group-sm">' +
@@ -275,4 +276,14 @@ function editOrderMenuItemQuantity(id, quantity) {
     } else {
         CountDownListener(id, quantity);
     }
+}
+//******************************************************************************//
+//****   数量欄について、半角数字のみINPUT可能、それ以外は空にする処理を実装           ****//
+//******************************************************************************//
+function onlyNumChecker(){
+$(".input_number_only").keyup(function(){
+    alert("non number");
+    var thisval = $(this).val().replace(/[^\d-.]/g,);
+    $(this).val(thisval);
+});
 }
