@@ -21,6 +21,19 @@ function startCustomize() {
         window.open(url, "_blunk");
     });
 };
+
+//******************************************************************************//
+//****   quantityCountDownListener:注文情報の数量に変更あったときに配列修正する処理 ****//
+//******************************************************************************//
+function CountDownListener(id, quantity) {
+    const body = new FormData();
+    console.log(quantity);
+    body.append("quantity", quantity.toString());
+    fetch(`./api/v1/orderItem/${id}`, { method: 'PUT', body })
+        .then(() => fetchOrderList());
+}
+
+
 //******************************************************************************//
 //****      deleteButtonListener:注文の提供完了した際に配列から削除する処理        ****//
 //******************************************************************************//
@@ -46,9 +59,9 @@ function renderOrderList(orderList) {
             '</div>' +
             '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
             '<div class="input-group mt-2">' +
-            '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
-            '<button type="button" class="btn btn-danger">-0.5</button>'+
-            '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
+            '<div class="input-group-text bg-secondary text-white border border-2 border-secondary" id="btnGroupAddon">数量</div>' +
+            '<button id="" type="button" class="btn btn-outline-danger fs-6" id="editOrderMenuItemQuantity" value="'+msg.id+'" onclick="window.editOrderMenuItemQuantity(this.value,' + msg.quantity + ');">-0.5</button>' +
+            '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
             '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +
@@ -210,8 +223,8 @@ function getOrderMenuList() {
             '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
             '<div class="input-group mt-2">' +
             '<div class="input-group-text bg-secondary text-white border border-2 border-secondary" id="btnGroupAddon">数量</div>' +
-            '<button type="button" class="btn btn-outline-danger fs-6">-0.5</button>'+
-            '<input id="quantityOf:'+ msg.id+'" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
+            '<button id="" type="button" class="btn btn-outline-danger fs-6" id="editOrderMenuItemQuantity" value="'+msg.id+'" onclick="window.editOrderMenuItemQuantity(this.value,' + msg.quantity + ');">-0.5</button>' +
+            '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
             '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +
@@ -229,3 +242,11 @@ function deleteOrderMenuItem(id) {
     $("#" + id).remove();
     deleteButtonListener(id);
 };
+//******************************************************************************//
+//****                 deleteOrderMenuItem:注文一覧の削除                     ****//
+//******************************************************************************//
+function editOrderMenuItemQuantity(id, quantity) {
+    console.log("EDIT ID: " + id + ',QUANTITY: ' + quantity);
+    quantity = quantity - 0.5;
+    CountDownListener(id, quantity);
+}

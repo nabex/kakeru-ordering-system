@@ -54,6 +54,7 @@ app.put("/api/v1/orderItem/:id", (req, res) => {
   if(index >= 0){
     const item = orderList[index];
     if(req.body.quantity){
+      console.log(req.body.quantity);
       item.quantity = req.body.quantity;
     }
     console.log('CALL EDIT API: ' + JSON.stringify(item));
