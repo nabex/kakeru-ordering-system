@@ -5,12 +5,11 @@ const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
 path = require('path'),
-//const PORT = 3000;
 app.use(multer().none());
-
-//注文一覧の情報格納用の配列
-const orderList = [];
-//UUID生成関数
+const orderList = []; //注文一覧の情報格納用の配列
+//******************************************************************************//
+//****                uuid：UUID生成関数                                      ****//
+//******************************************************************************//
 function uuid() {
   var uuid = "", i, random;
   for (i = 0; i < 32; i++) {
@@ -22,21 +21,26 @@ function uuid() {
   }
   return uuid;
 }
-
+//******************************************************************************//
+//****                index.html TOP画面提供処理                              ****//
+//******************************************************************************//
 // 静的ファイルの場所を指定する(この配下で、CSS,JS,IMG,音声ファイルなどの静的ファイルが使用可能に)
 app.use(express.static(path.join(__dirname, '/')));
-
 //サーバのルートディレクトリに格納されているindex.html(TOP画面)を表示される
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-// http://FQDN/api/v1/orderList にアクセスしてきたときにオーダ一覧のリストを返す
+//******************************************************************************//
+//****                GET API orderList：注文一覧呼出しAPI                     ****//
+//******************************************************************************//
 app.get("/api/v1/orderList", (req, res) => {
   console.log("CALL API: app_get_orderList");
   res.json(orderList);
 });
-
+//******************************************************************************//
+//****              DELETE API orderItem：注文情報削除API　　                  ****//
+//******************************************************************************//
 app.delete("/api/v1/orderItem/:id", (req, res) => {
   // URLの:idと同じIDを持つ項目を検索
   const index = orderList.findIndex((item) => item.id === req.params.id);
@@ -48,7 +52,9 @@ app.delete("/api/v1/orderItem/:id", (req, res) => {
   // ステータスコード200:OKを送信
   res.sendStatus(200);
 })
-
+//******************************************************************************//
+//****              PUT API orderItem：注文数量変更API　　                     ****//
+//******************************************************************************//
 app.put("/api/v1/orderItem/:id", (req, res) => {
   const index = orderList.findIndex((item) => item.id === req.params.id);
   if(index >= 0){
@@ -62,8 +68,9 @@ app.put("/api/v1/orderItem/:id", (req, res) => {
   // ステータスコード200:OKを送信
   res.sendStatus(200);
 })
-
-
+//******************************************************************************//
+//****           socket.ioよるリアルタイム注文連携処理TOキッチン 　                ****//
+//******************************************************************************//
 io.on("connection", (socket) => {
   console.log("client connection!!!");
   //サーバが受け取った注文情報を全員確認できるようにする。クライアントに情報を返却する処理。
@@ -79,7 +86,6 @@ io.on("connection", (socket) => {
       remarks: orderInfo[3],   //備考
       time: orderInfo[4],      //注文時刻
       unixtime: orderInfo[5]  //注文時間(UNIX時間)
-
     }
     //注文一覧情報の格納用配列にPUSHする
     orderList.push(oderItem);
@@ -88,8 +94,9 @@ io.on("connection", (socket) => {
     io.emit("orderMenuList", oderItem);
   });
 });
-
-//サーバ起動時の初回読込処理
+//******************************************************************************//
+//****           サーバ起動時初回処理                         　                ****//
+//******************************************************************************//
 server.listen(process.env.PORT || 3000, () => {
   console.log("listening on HEROKU PORT or 3000");
 });

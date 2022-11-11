@@ -2,15 +2,16 @@
 //****                   HTML読込後に実行処理する関数一覧                        ****//
 //******************************************************************************//
 $(document).ready(function () {
-    table();                    //テーブル表示関数
-    getMenuList();              //商品一覧取得関数
-    fetchOrderList();           //リロード時配列から注文一覧取得関数
-    getOrderMenuList();         //注文追加・キッチン連携関数
-    startCustomize();           //商品一覧変更シート遷移関数
-    setInterval(showtime, 1000);//時刻リアルタイム表示関数
-    //renderOrderList();        //(グローバル指定)リロード時注文一覧表示関数
-    //deleteOrderMenuItem();    //(グローバル指定)注文一覧削除関数
-    //deleteButtonListener();   //(グローバル指定)配列操作:DELETE API呼出し関数
+    table();                        //テーブル表示関数
+    getMenuList();                  //商品一覧取得関数
+    fetchOrderList();               //リロード時配列から注文一覧取得関数
+    getOrderMenuList();             //注文追加・キッチン連携関数
+    startCustomize();               //商品一覧変更シート遷移関数
+    setInterval(showtime, 1000);    //時刻リアルタイム表示関数
+    //renderOrderList();            //(グローバル指定)リロード時注文一覧表示関数
+    //deleteOrderMenuItem();        //(グローバル指定)注文一覧削除関数
+    //deleteButtonListener();       //(グローバル指定)配列操作:DELETE API呼出し関数_注文処理完了時
+    //editOrderMenuItemQuantity();  //(グローバル指定)配列操作:PUT API呼出し関数_数量変更時
 });
 //******************************************************************************//
 //****       startCustomize:商品一覧変更用のシートを遷移させる処理　　　　　　       ****//
@@ -21,7 +22,6 @@ function startCustomize() {
         window.open(url, "_blunk");
     });
 };
-
 //******************************************************************************//
 //****   quantityCountDownListener:注文情報の数量に変更あったときに配列修正する処理 ****//
 //******************************************************************************//
@@ -32,8 +32,6 @@ function CountDownListener(id, quantity) {
     fetch(`./api/v1/orderItem/${id}`, { method: 'PUT', body })
         .then(() => fetchOrderList());
 }
-
-
 //******************************************************************************//
 //****      deleteButtonListener:注文の提供完了した際に配列から削除する処理        ****//
 //******************************************************************************//
