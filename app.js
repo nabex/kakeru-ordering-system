@@ -58,7 +58,7 @@ function renderOrderList(orderList) {
             '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
             '<div class="input-group mt-2 mb-2">' +
             '<div class="input-group-text bg-secondary text-white border border-2 border-secondary" id="btnGroupAddon">数量</div>' +
-            '<button id="" type="button" class="btn btn-outline-danger fs-6" id="editOrderMenuItemQuantity" value="'+msg.id+'" onclick="window.editOrderMenuItemQuantity(this.value,' + msg.quantity + ');">-0.5</button>' +
+            '<button id="" type="button" class="btn btn-outline-danger fs-6" id="editOrderMenuItemQuantity" value="' + msg.id + '" onclick="window.editOrderMenuItemQuantity(this.value,' + msg.quantity + ');">-0.5</button>' +
             '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
@@ -163,14 +163,17 @@ function getMenuList() {
                 var time = (toDoubleDigits(now.getHours()) + ':' + toDoubleDigits(now.getMinutes())); //時刻表示のフォーマット作成し変数に代入
                 var sendOrderFlg = "";                                //個数の記載が漏れていないかチェックする変数
                 for (let i in data) {                                 //SpreadSheetから全行呼び出し
-                    if (data[i].item != '') {                           //空欄は読み取らない
-                        if ($("#name" + i).prop("checked")) {             //チェックが入っている場合
-                            var quantity = $("#quantity" + i).val();        //個数を変数に代入
-                            if (quantity == '') {
-                                sendOrderFlg = "NG";                          //個数の記載に漏れ有り。case "NG"へ
+                    if (data[i].item != '') {                         //空欄は読み取らない
+                        if ($("#name" + i).prop("checked")) {         //チェックが入っている場合
+                            if ($("#quantity" + i).val() == '') {
+                                sendOrderFlg = "NG";                   //個数の記載に漏れ有り。case "NG"へ
                             } else {
-                                sendOrderFlg = "OK";                          //個数の記載に漏れ無し。case "OK"へ
+                                sendOrderFlg = "OK";                   //個数の記載に漏れ無し。case "OK"へ
                             }
+                        } else if ($("#quantity" + i).val() != '') {
+                            sendOrderFlg = "NG";                       //個数の記載あるがチェック漏れ。case "NG"へ
+                        } else if ($("#remarks" + i).val() != '') {
+                            sendOrderFlg = "NG";                       //備考の記載あるが個数又はチェック漏れ。case "NG"へ
                         }
                     }
                 }
@@ -179,10 +182,10 @@ function getMenuList() {
                         for (let i in data) {
                             if (data[i].item != '') {
                                 if ($("#name" + i).prop("checked")) {             //チェックが入っている場合
-                                    var tablenumber = $("#tableNumber").text();     //テーブルナンバーを変数に代入
-                                    var name = $("#name" + i).val();                //商品名を変数に代入
-                                    var quantity = $("#quantity" + i).val();        //個数を変数に代入
-                                    var remarks = $("#remarks" + i).val();          //備考を変数に代入
+                                    var tablenumber = $("#tableNumber").text();   //テーブルナンバーを変数に代入
+                                    var name = $("#name" + i).val();              //商品名を変数に代入
+                                    var quantity = $("#quantity" + i).val();      //個数を変数に代入
+                                    var remarks = $("#remarks" + i).val();        //備考を変数に代入
                                     let socket = io();
 
                                     //上記の変数を結合。//server.jsに一覧情報を送信し、クライアントにブロードキャスト。
@@ -197,8 +200,27 @@ function getMenuList() {
                         break;
                     //個数の記載に漏れがあった場合のケース
                     case "NG":
-                        alert("個数の記載が漏れてます。見直してください");
+                        alert("個数の記載又はチェックが漏れてます。見直してください");
+                        for (let i in data) {
+                            if (data[i].item != '') {
+                                //処理完了後、全てのINPUTボックスの値をリセットする
+                                $("#name" + i).removeAttr("checked").prop("checked", false).change(); //チェックボックスのリセット
+                                $("#quantity" + i).val('');                                           //入力した数量のリセット
+                                $("#remarks" + i).val('');                                            //入力した備考のリセット
+                            }
+                        }
                         break;
+                }
+            });
+            //Closeを押下した時、入力欄をリセット
+            $("#postOrderAppScreenClose").click(function () {
+                for (let i in data) {                                 //SpreadSheetから全行呼び出し
+                    if (data[i].item != '') {                         //空欄は読み取らない
+                        //全てのINPUTボックスの値をリセットする
+                        $("#name" + i).removeAttr("checked").prop("checked", false).change(); //チェックボックスのリセット
+                        $("#quantity" + i).val('');                                           //入力した数量のリセット
+                        $("#remarks" + i).val('');                                            //入力した備考のリセット
+                    }
                 }
             });
         });
@@ -221,7 +243,7 @@ function getOrderMenuList() {
             '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
             '<div class="input-group mt-2 mb-2">' +
             '<div class="input-group-text bg-secondary text-white border border-2 border-secondary" id="btnGroupAddon">数量</div>' +
-            '<button id="" type="button" class="btn btn-outline-danger fs-6" id="editOrderMenuItemQuantity" value="'+msg.id+'" onclick="window.editOrderMenuItemQuantity(this.value,' + msg.quantity + ');">-0.5</button>' +
+            '<button id="" type="button" class="btn btn-outline-danger fs-6" id="editOrderMenuItemQuantity" value="' + msg.id + '" onclick="window.editOrderMenuItemQuantity(this.value,' + msg.quantity + ');">-0.5</button>' +
             '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
@@ -246,11 +268,11 @@ function deleteOrderMenuItem(id) {
 function editOrderMenuItemQuantity(id, quantity) {
     console.log("EDIT ID: " + id + ',QUANTITY: ' + quantity);
     quantity = quantity - 0.5;
-    if(quantity < 0){
+    if (quantity < 0) {
         alert("当該注文は全て対応済です。注文情報を一覧から削除します。");
         deleteButtonListener(id);
         //quantity = 0;
-    }else{
+    } else {
         CountDownListener(id, quantity);
     }
 }
