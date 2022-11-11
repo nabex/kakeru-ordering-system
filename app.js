@@ -211,7 +211,7 @@ function getOrderMenuList() {
             '<div class="input-group mt-2">' +
             '<div class="input-group-text bg-secondary text-white border border-2 border-secondary" id="btnGroupAddon">数量</div>' +
             '<button type="button" class="btn btn-outline-danger fs-6">-0.5</button>'+
-            '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
+            '<input id="quantityOf:'+ msg.id+'" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
             '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +

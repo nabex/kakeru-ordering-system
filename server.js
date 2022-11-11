@@ -45,7 +45,19 @@ app.delete("/api/v1/orderItem/:id", (req, res) => {
     const deleted = orderList.splice(index, 1); // indexの位置にある項目を削除
     console.log('CALL DELETE API: ' + JSON.stringify(deleted[0]));
   }
+  // ステータスコード200:OKを送信
+  res.sendStatus(200);
+})
 
+app.put("/api/v1/orderItem/:id", (req, res) => {
+  const index = orderList.findIndex((item) => item.id === req.params.id);
+  if(index >= 0){
+    const item = orderList[index];
+    if(req.body.quantity){
+      item.quantity = req.body.quantity;
+    }
+    console.log('CALL EDIT API: ' + JSON.stringify(item));
+  }
   // ステータスコード200:OKを送信
   res.sendStatus(200);
 })
