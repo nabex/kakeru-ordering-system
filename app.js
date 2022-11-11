@@ -50,7 +50,7 @@ function renderOrderList(orderList) {
             '<input type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
-            '<small>備考：' + msg.remarks + '</small>' +
+            '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +
             '</div>' +
             '</div>'
         );
@@ -212,7 +212,7 @@ function getOrderMenuList() {
             '<input type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
-            '<small>備考：' + msg.remarks + '</small>' +
+            '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +
             '</div>' +
             '</div>'
         );
