@@ -247,7 +247,7 @@ function editOrderMenuItemQuantity(id, quantity) {
     console.log("EDIT ID: " + id + ',QUANTITY: ' + quantity);
     quantity = quantity - 0.5;
     if(quantity < 0){
-        alert("該当の注文は全て対応済です。注文情報を画面削除します。");
+        alert("当該注文は全て対応済です。注文情報を一覧から削除します。");
         deleteButtonListener(id);
         //quantity = 0;
     }else{
