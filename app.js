@@ -246,5 +246,11 @@ function deleteOrderMenuItem(id) {
 function editOrderMenuItemQuantity(id, quantity) {
     console.log("EDIT ID: " + id + ',QUANTITY: ' + quantity);
     quantity = quantity - 0.5;
-    CountDownListener(id, quantity);
+    if(quantity < 0){
+        alert("該当の注文は全て対応済です。注文情報を画面削除します。");
+        deleteButtonListener(id);
+        //quantity = 0;
+    }else{
+        CountDownListener(id, quantity);
+    }
 }
