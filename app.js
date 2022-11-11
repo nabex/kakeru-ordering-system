@@ -19,7 +19,7 @@ $(document).ready(function () {
 //******************************************************************************//
 function startCustomize() {
     $("#startCustomize").on("click", function () {
-        const url = 'https://docs.google.com/spreadsheets/d/1GWbxTcwg0jFoESiucSXHrzzgu0fVtpS_Ir3fFi30Ndo/edit#gid=1330995100';
+        const url = 'https://docs.google.com/spreadsheets/d/1GWbxTcwg0jFoESiucSXHrzzgu0fVtpS_Ir3fFi30Ndo/edit#gid=0';
         window.open(url, "_blunk");
     });
 };
@@ -282,7 +282,6 @@ function editOrderMenuItemQuantity(id, quantity) {
 //******************************************************************************//
 function onlyNumChecker(){
 $(".input_number_only").keyup(function(){
-    alert("non number");
     var thisval = $(this).val().replace(/[^\d-.]/g,);
     $(this).val(thisval);
 });
