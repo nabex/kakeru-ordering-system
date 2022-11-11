@@ -47,7 +47,8 @@ function renderOrderList(orderList) {
             '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
             '<div class="input-group mt-2">' +
             '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
-            '<input type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
+            '<button type="button" class="btn btn-danger">-0.5</button>'+
+            '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
             '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +
@@ -208,8 +209,9 @@ function getOrderMenuList() {
             '</div>' +
             '<small id="time" class="text-muted" data-livestamp="' + msg.unixtime + '"></small>' +
             '<div class="input-group mt-2">' +
-            '<div class="input-group-text" id="btnGroupAddon">数量</div>' +
-            '<input type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" id="showQuantity" value="' + msg.quantity + '">' +
+            '<div class="input-group-text bg-secondary text-white border border-2 border-secondary" id="btnGroupAddon">数量</div>' +
+            '<button type="button" class="btn btn-outline-danger fs-6">-0.5</button>'+
+            '<input id="" type="number" min="0" max="' + msg.quantity + '" step="0.5" class="form-control fw-bold fs-4" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="' + msg.quantity + '" disabled>' +
             '<button type="button" class="btn btn-outline-primary" id="deleteOrderMenuItem" value="' + msg.id + '" onclick="window.deleteOrderMenuItem(this.value);">DONE</button>' +
             '</div>' +
             '<small>備考：<span class="text-danger">' + msg.remarks + '<span></small>' +
