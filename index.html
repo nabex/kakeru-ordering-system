@@ -66,8 +66,8 @@
               卓番と商品を選択。注文確定ボタンを押下すると<br>
               キッチンに注文情報が送信されます。
             </p>
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="modal"
-              data-bs-target="#postOrderAppScreen">START POST ORDER</button>
+            <button class="btn btn-outline-light" type="button" data-toggle="modal"
+              data-target="#postOrderAppScreen">START POST ORDER</button>
           </div>
         </div>
 
@@ -79,8 +79,8 @@
               RECEVE ORDER Application はホールスタッフからPOSTされた注文情報を一覧表示します。調理完了後、対象の注文情報に表示されている<br>
               DONE を押下すると、一覧から削除されます。
             </p>
-            <button id="getFetchOrderMenuList" class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
-              data-bs-target="#receiveOrderAppScreen">START RECEIVE ORDER</button>
+            <button id="getFetchOrderMenuList" class="btn btn-outline-secondary" type="button" data-toggle="modal"
+              data-target="#receiveOrderAppScreen">START RECEIVE ORDER</button>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@
                 </svg>
                 <span class="fs-4 ms-2 fw-bold">POST ORDER Application</span>
               </div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="container modal-body">
               <div class="row">
@@ -110,7 +110,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button id="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
                 </svg>
                 <span class="fs-4 ms-2 fw-bold">RECEIVED ORDER Application</span>
               </div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="container modal-body">
               <div class="row">
@@ -141,7 +141,7 @@
             </div>
             <div class="modal-footer">
               <p id="showtime" class="fs-5 ms-2 mr-3 fw-bold"></p>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">TABLE #0<span id="tableNumber"></span> 注文追加</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="row">
@@ -168,8 +168,8 @@
             </div>
             <div class="modal-footer">
               <button id="postOrderAppScreenClose" type="button" class="btn btn-secondary"
-                data-bs-dismiss="modal">閉じる</button>
-              <button type="button" class="btn btn-primary" id="sendOrderList" data-bs-dismiss="modal">注文確定</button>
+                data-dismiss="modal">閉じる</button>
+              <button type="button" class="btn btn-primary" id="sendOrderList" data-dismiss="modal">注文確定</button>
             </div>
           </div>
         </div>
@@ -185,6 +185,7 @@
 </body>
 
 <!-- Bootstrap Bundle with Popper -->
+<!--
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
   integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -193,6 +194,14 @@
   integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
   crossorigin="anonymous"></script>
+
+-->
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/livestamp/1.1.0/livestamp.js"></script>

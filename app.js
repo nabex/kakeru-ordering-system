@@ -6,7 +6,7 @@ $(document).ready(function () {
     getMenuList();                  //商品一覧取得関数
     fetchOrderList();               //リロード時配列から注文一覧取得関数
     getOrderMenuList();             //注文追加・キッチン連携関数
-    startCustomize();               //商品一覧変更シート遷移関数
+    //startCustomize();               //商品一覧変更シート遷移関数
     setInterval(showtime, 1000);    //時刻リアルタイム表示関数
     onlyNumChecker();               //数量欄は半角数字のみ入力可能にする関数
     //renderOrderList();            //(グローバル指定)リロード時注文一覧表示関数
@@ -17,12 +17,10 @@ $(document).ready(function () {
 //******************************************************************************//
 //****       startCustomize:商品一覧変更用のシートを遷移させる処理　　　　　　       ****//
 //******************************************************************************//
-function startCustomize() {
-    $("#startCustomize").on("click", function () {
-        const url = 'https://docs.google.com/spreadsheets/d/1GWbxTcwg0jFoESiucSXHrzzgu0fVtpS_Ir3fFi30Ndo/edit#gid=0';
-        window.open(url, "_blunk");
-    });
-};
+$("#startCustomize").on("click", function () {
+    const url = 'https://docs.google.com/spreadsheets/d/1GWbxTcwg0jFoESiucSXHrzzgu0fVtpS_Ir3fFi30Ndo/edit#gid=0';
+    window.open(url, "_blunk");
+});
 //******************************************************************************//
 //****   quantityCountDownListener:注文情報の数量に変更あったときに配列修正する処理 ****//
 //******************************************************************************//
@@ -102,7 +100,7 @@ function table() {
             '<p class="card-text">TABLE #0' + i + '</p>' +
             '<div class="d-flex justify-content-between align-items-center">' +
             '<div class="btn-group">' +
-            '<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="showOderListBtn' + i + '" data-id="' + i + '">注文追加</button>' +
+            '<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" id="showOderListBtn' + i + '" data-id="' + i + '">注文追加</button>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -120,6 +118,7 @@ function table() {
 //****                getMenuList：商品一覧情報取得処理                         ****//
 //******************************************************************************//
 function getMenuList() {
+    alert("get MENU LIST");
     //yakiniku_base_kakeru_getMenuData APIのURLを登録し、for文でメニュー一覧を生成するメソッド
     let getMenuListUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=EZXmzoBafbyPS-6Ixc6DRwqb_15rw39a2WZB21vm3zureTeQMeKPliUW6nZQnHWqtyBBqrs4W9rtwnmrs32ZaaWxuiIjU9K0m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKRx4GluyHKPsrb7MZoYGSx9aLlJMtuH1A999yVfFgGKCzQSEfljAkUMW9-RxnHaRcTvy1m0tLyP&lib=McBVuQVLovZoHBxBRGy3jZPlRnzlbkUi4";
     $.getJSON(getMenuListUrl, function (data) {
@@ -280,9 +279,9 @@ function editOrderMenuItemQuantity(id, quantity) {
 //******************************************************************************//
 //****   数量欄について、半角数字のみINPUT可能、それ以外は空にする処理を実装           ****//
 //******************************************************************************//
-function onlyNumChecker(){
-$(".input_number_only").keyup(function(){
-    var thisval = $(this).val().replace(/[^\d-.]/g,);
-    $(this).val(thisval);
-});
+function onlyNumChecker() {
+    $(".input_number_only").keyup(function () {
+        var thisval = $(this).val().replace(/[^\d-.]/g,);
+        $(this).val(thisval);
+    });
 }
