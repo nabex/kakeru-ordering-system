@@ -118,7 +118,6 @@ function table() {
 //****                getMenuList：商品一覧情報取得処理                         ****//
 //******************************************************************************//
 function getMenuList() {
-    alert("get MENU LIST");
     //yakiniku_base_kakeru_getMenuData APIのURLを登録し、for文でメニュー一覧を生成するメソッド
     let getMenuListUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=EZXmzoBafbyPS-6Ixc6DRwqb_15rw39a2WZB21vm3zureTeQMeKPliUW6nZQnHWqtyBBqrs4W9rtwnmrs32ZaaWxuiIjU9K0m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKRx4GluyHKPsrb7MZoYGSx9aLlJMtuH1A999yVfFgGKCzQSEfljAkUMW9-RxnHaRcTvy1m0tLyP&lib=McBVuQVLovZoHBxBRGy3jZPlRnzlbkUi4";
     $.getJSON(getMenuListUrl, function (data) {
