@@ -250,7 +250,9 @@ function getOrderMenuList() {
             '</div>' +
             '</div>'
         );
-        $("#playAudio").get(0).play();//音楽再生
+        //$("#playAudio").get(0).play();//音楽再生
+        var sound = new Howl({ src: ['postAudio.mp3'] })
+        sound.play()
     });
 }
 //******************************************************************************//
