@@ -91,7 +91,7 @@ function showtime() {
 //****                   table:テーブル一覧を表示する処理                       ****//
 //******************************************************************************//
 function table() {
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 4; i <= 9; i++) {
         $("#table").append(
             '<div class="col">' +
             '<div class="card shadow-sm">' +
