@@ -137,13 +137,30 @@ function getMenuList() {
                     '<input type="number" min="0" max="99" step="0.5" class="input_number_only form-control" name="menu_" id="quantity' + i + '" placeholder="個数">' +
                     //'<button type="button" class="btn btn-plus btn-increment btn-primary" id="addQuantity' + i + '">+1</button>' +
                     '</div>' +
-                    '<div class="col-md-4 input-group-sm">' +
                     //備考入力欄
-                    '<input type="test" class="form-control" name="menu_" id="remarks' + i + '" placeholder="備考">' +
+                    '<div class="col-md-4 input-group-sm btn-group">' +
+                    '<input type="text" class="form-control" name="menu_" id="remarks' + i + '" placeholder="備考">' +
+                    '<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>' +
+                    '<div id="remarks' + i + '" class="dropdown-menu">' +
+                    '<option id="taste-sio' + i + '" class="dropdown-item" href="#">塩</option>' +
+                    '<option id="taste-tare' + i + '" class="dropdown-item" href="#">タレ</option>' +
+                    '</div>' +
                     '</div>' +
                     '</div>' +
                     '</li>'
                 );
+                
+                //備考欄隣のドロップダウンで塩を選択したら、備考欄に文字列セット
+                $("#taste-sio" + i).on("click", function () {
+                    var tasteSio = $("#taste-sio" + i).val();
+                    $("#remarks" + i).val(tasteSio);
+                });
+
+                //備考欄隣のドロップダウンでタレを選択したら、備考欄に文字列セット
+                $("#taste-tare" + i).on("click", function () {
+                    var tasteTare = $("#taste-tare" + i).val();
+                    $("#remarks" + i).val(tasteTare);
+                });
             }
         }//for文終了
         //注文確定ボタン押下時にチェック入っているメニューの一覧取得し、キッチンメニューに一覧表示。サーバに注文情報を送信。
