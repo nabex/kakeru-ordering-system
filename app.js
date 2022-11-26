@@ -142,8 +142,8 @@ function getMenuList() {
                     '<input type="text" class="form-control" name="menu_" id="remarks' + i + '" placeholder="備考">' +
                     '<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>' +
                     '<div id="remarks' + i + '" class="dropdown-menu">' +
-                    '<option id="taste-sio' + i + '" class="dropdown-item" href="#">塩</option>' +
-                    '<option id="taste-tare' + i + '" class="dropdown-item" href="#">タレ</option>' +
+                    '<div id="taste-sio' + i + '" class="dropdown-item" href="#">塩</div>' +
+                    '<div id="taste-tare' + i + '" class="dropdown-item" href="#">タレ</div>' +
                     '</div>' +
                     '</div>' +
                     '</div>' +
